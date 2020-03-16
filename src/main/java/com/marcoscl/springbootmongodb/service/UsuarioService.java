@@ -35,6 +35,17 @@ public class UsuarioService {
 		usuarioRepository.deleteById(id);
 	}
 	
+	public Usuario atualizar(Usuario usuario) {
+		Usuario usuarioAtualizado = buscarPorId(usuario.getId());
+		atualizarDados(usuarioAtualizado, usuario);
+		return usuarioRepository.save(usuarioAtualizado);
+	}
+
+	private void atualizarDados(Usuario usuarioAtualizado, Usuario usuario) {
+		usuarioAtualizado.setNome(usuario.getNome());
+		usuarioAtualizado.setEmail(usuario.getEmail());		
+	}
+
 	public Usuario apartirDTO(UsuarioDTO usuarioDTO) {
 		return new Usuario(usuarioDTO.getId(), usuarioDTO.getNome(), usuarioDTO.getEmail());
 	}

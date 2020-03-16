@@ -53,5 +53,14 @@ public class UsuarioResource {
 		usuarioService.deletar(id);
 		return ResponseEntity.noContent().build();
 	}
+	
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+	public ResponseEntity<Void> atualizar(@RequestBody UsuarioDTO usuarioDTO, @PathVariable String id) {
+		Usuario usuario = usuarioService.apartirDTO(usuarioDTO);
+		usuario.setId(id);
+		usuario = usuarioService.atualizar(usuario);
+		return ResponseEntity.noContent().build();
+	}
+	
 
 }
