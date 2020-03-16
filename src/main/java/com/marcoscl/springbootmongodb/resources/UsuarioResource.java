@@ -47,5 +47,11 @@ public class UsuarioResource {
 	// created codigo 201
 		return ResponseEntity.created(uri).build();
 	}
+	
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<UsuarioDTO> deletar(@PathVariable String id) {
+		usuarioService.deletar(id);
+		return ResponseEntity.noContent().build();
+	}
 
 }
