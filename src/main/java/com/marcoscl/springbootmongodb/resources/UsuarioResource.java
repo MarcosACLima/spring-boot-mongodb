@@ -1,14 +1,17 @@
 package com.marcoscl.springbootmongodb.resources;
 
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.marcoscl.springbootmongodb.domain.Usuario;
 import com.marcoscl.springbootmongodb.dto.UsuarioDTO;
@@ -33,6 +36,16 @@ public class UsuarioResource {
 	public ResponseEntity<UsuarioDTO> buscarPorId(@PathVariable String id) {
 		Usuario usuario = usuarioService.buscarPorId(id);
 		return ResponseEntity.ok().body(new UsuarioDTO(usuario));
+	}
+	
+	@RequestMapping(method = RequestMethod.POST)
+	public ResponseEntity<Void> inserir(@RequestBody UsuarioDTO usuarioDTO) {
+		Usuario usuario = usuarioService.apartirDTO(usuarioDTO);
+		usuario = usuarioService.inserir(usuario);
+	// Obter endereço do novo objeto inserido ->
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(usuario.getId()).toUri();
+	// created codigo 201
+		return ResponseEntity.created(uri).build();
 	}
 
 }

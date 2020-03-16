@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.marcoscl.springbootmongodb.domain.Usuario;
+import com.marcoscl.springbootmongodb.dto.UsuarioDTO;
 import com.marcoscl.springbootmongodb.repository.UsuarioRepository;
 import com.marcoscl.springbootmongodb.service.excepction.ObjetoNaoEncontradoException;
 
@@ -23,6 +24,15 @@ public class UsuarioService {
 	public Usuario buscarPorId(String id) {
 		Optional<Usuario> usuario = usuarioRepository.findById(id);
 		return usuario.orElseThrow(() -> new ObjetoNaoEncontradoException("Objeto não encontrado"));
+	}
+	
+	public Usuario inserir(Usuario usuario ) {
+		return usuarioRepository.insert(usuario);
+	}
+	
+//	
+	public Usuario apartirDTO(UsuarioDTO usuarioDTO) {
+		return new Usuario(usuarioDTO.getId(), usuarioDTO.getNome(), usuarioDTO.getEmail());
 	}
 
 }
