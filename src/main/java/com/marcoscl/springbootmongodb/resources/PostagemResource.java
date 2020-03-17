@@ -27,8 +27,8 @@ public class PostagemResource {
 		return ResponseEntity.ok().body(postagem);
 	}
 	
-//	http://localhost:8080/postagens/procurartitulo?titulo=Bom%20dia
-	@RequestMapping(value = "/procurartitulo", method = RequestMethod.GET)
+//	http://localhost:8080/postagens/pesquisartitulo?titulo=Bom%20dia
+	@RequestMapping(value = "/pesquisartitulo", method = RequestMethod.GET)
 	public ResponseEntity<List<Postagem>> buscarPorTitulo(@RequestParam(value = "titulo", defaultValue="") String titulo) {
 		titulo = URL.decodificarParametro(titulo);
 		List<Postagem> postagens = postagemService.buscarPorTitulo(titulo);
