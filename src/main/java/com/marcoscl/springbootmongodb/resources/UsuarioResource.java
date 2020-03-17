@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.marcoscl.springbootmongodb.domain.Postagem;
 import com.marcoscl.springbootmongodb.domain.Usuario;
 import com.marcoscl.springbootmongodb.dto.UsuarioDTO;
 import com.marcoscl.springbootmongodb.service.UsuarioService;
@@ -62,5 +63,10 @@ public class UsuarioResource {
 		return ResponseEntity.noContent().build();
 	}
 	
+	@RequestMapping(value = "/{id}/postagens", method = RequestMethod.GET)
+	public ResponseEntity<List<Postagem>> buscarPostagens(@PathVariable String id) {
+		Usuario usuario = usuarioService.buscarPorId(id);
+		return ResponseEntity.ok().body(usuario.getPostagens());
+	}
 
 }
