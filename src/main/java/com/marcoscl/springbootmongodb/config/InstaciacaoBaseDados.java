@@ -42,6 +42,9 @@ public class InstaciacaoBaseDados implements CommandLineRunner {
 		Postagem postagem2 = new Postagem(null, sdf.parse("23/03/2020"), "Bom dia", "Acordei feliz hoje!", new AutorDTO(maria));
 	
 		postagemRepository.saveAll(Arrays.asList(postagem1, postagem2));
+		
+		maria.getPostagens().addAll(Arrays.asList(postagem1, postagem2));
+		usuarioRepository.save(maria);
 				
 	}
 }
