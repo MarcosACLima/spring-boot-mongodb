@@ -1,5 +1,6 @@
 package com.marcoscl.springbootmongodb.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,10 @@ public class PostagemService {
 	public Postagem buscarPorId(String id) {
 		Optional<Postagem> postagem = postagemRepository.findById(id);
 		return postagem.orElseThrow(() -> new ObjetoNaoEncontradoException("Objeto não encontrado"));
+	}
+	
+	public List<Postagem> buscarPorTitulo(String titulo) {
+		return postagemRepository.findByTituloContainingIgnoreCase(titulo);
 	}
 	
 }
