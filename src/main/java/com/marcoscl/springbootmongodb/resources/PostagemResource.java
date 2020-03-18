@@ -1,5 +1,6 @@
 package com.marcoscl.springbootmongodb.resources;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,18 @@ public class PostagemResource {
 	public ResponseEntity<List<Postagem>> buscarPorTitulo(@RequestParam(value = "titulo", defaultValue="") String titulo) {
 		titulo = URL.decodificarParametro(titulo);
 		List<Postagem> postagens = postagemService.buscarPorTitulo(titulo);
+		return ResponseEntity.ok().body(postagens);
+	}
+	
+	@RequestMapping(value = "/pesquisacompleta", method = RequestMethod.GET)
+	public ResponseEntity<List<Postagem>> pesquisaCompleta(
+			@RequestParam(value = "texto", defaultValue="") String texto,
+			@RequestParam(value = "minData", defaultValue="") String minData,
+			@RequestParam(value = "maxData", defaultValue="") String maxData) {
+		texto = URL.decodificarParametro(texto);
+		Date min = URL.converterData(minData, new Date(0L));
+		Date max = URL.converterData(maxData, new Date());
+		List<Postagem> postagens = postagemService.pesquisaCompleta(texto, min, max);
 		return ResponseEntity.ok().body(postagens);
 	}
 	

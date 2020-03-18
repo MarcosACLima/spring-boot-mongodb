@@ -1,5 +1,6 @@
 package com.marcoscl.springbootmongodb.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,6 +24,11 @@ public class PostagemService {
 	
 	public List<Postagem> buscarPorTitulo(String titulo) {
 		return postagemRepository.pesquisarTitulo(titulo);
+	}
+	
+	public List<Postagem> pesquisaCompleta(String texto, Date minData, Date maxData) {
+		maxData = new Date(maxData.getTime() + 24 * 60 * 60 * 1000); // adicionado 24 horas para contar ate o final do dia 
+		return postagemRepository.pesquisaCompleta(texto, minData, maxData);
 	}
 	
 }

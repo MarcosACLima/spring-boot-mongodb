@@ -1,5 +1,6 @@
 package com.marcoscl.springbootmongodb.repository;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
@@ -17,5 +18,11 @@ public interface PostagemRepository extends MongoRepository<Postagem, String>{
 //	metodo anterior personalizado, pode usar nome que quiser para o metodo
 	@Query("{ 'titulo' : { $regex: ?0, $options: 'i' } }")
 	List<Postagem> pesquisarTitulo(String titulo);
+	
+	@Query("{ $and: [ { data: {$gte: ?1} }, { data: {$lte: ?2} }, "
+			+ "{ $or: [ { 'titulo': { $regex: ?0, $options: 'i' } }, "
+			+ "{ 'corpo': { $regex: ?0, $options: 'i' } }, "
+			+ "{ 'comentarios.texto': { $regex: ?0, $options: 'i' } } ] } ] }")
+	List<Postagem> pesquisaCompleta(String texto, Date minData, Date maxData);
 	
 }
